@@ -3,34 +3,36 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Login" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_category"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Category" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Search Recipes" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_add"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Add Recipe" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Logout"
+            android:visible="false"
+            />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Information"
+            />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
 
 </menu>
