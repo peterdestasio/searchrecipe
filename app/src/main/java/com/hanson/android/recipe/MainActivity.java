@@ -1,5 +1,6 @@
 package com.hanson.android.recipe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,11 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.hanson.android.recipe.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CategoryListFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +92,8 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_category)
         {
             //connect to category page
-            CategoryListFragment categoryListFragment = new CategoryListFragment();
-            manager.beginTransaction().replace(R.id.root_layout, categoryListFragment, categoryListFragment.getTag()).addToBackStack(null).commit();
+            CategoryFragment categoryFragment = new CategoryFragment();
+            manager.beginTransaction().replace(R.id.root_layout, categoryFragment, categoryFragment.getTag()).addToBackStack(null).commit();
 
         }
         else if (id == R.id.nav_search)
@@ -103,8 +105,10 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_add)
         {
             //connect to add recipe page
-            AddRecipeFragment addRecipeFragment = new AddRecipeFragment();
-            manager.beginTransaction().replace(R.id.root_layout, addRecipeFragment, addRecipeFragment.getTag()).addToBackStack(null).commit();
+//            AddRecipeFragment addRecipeFragment = new AddRecipeFragment();
+//            manager.beginTransaction().replace(R.id.root_layout, addRecipeFragment, addRecipeFragment.getTag()).addToBackStack(null).commit();
+            Intent intent = new Intent(this, AddRecipeActivity.class);
+            startActivity(intent);
 
         }
         else if (id == R.id.nav_info)
@@ -124,8 +128,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
 }
