@@ -230,6 +230,36 @@ public class DBHelper extends SQLiteOpenHelper
         return allRecipes;
     }
 
+    public ArrayList<RecipeItem> recipes_SelectByCategory(String category)
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<RecipeItem> allRecipes = new ArrayList<>();
+        // Get all recipes data
+        Cursor cursor = db.rawQuery("SELECT * FROM RECIPES WHERE category = '" + category + "'", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                allRecipes.add(new RecipeItem(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getBlob(7),
+                        cursor.getBlob(8),
+                        cursor.getInt(9)
+                ));
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return allRecipes;
+    }
+
     public RecipeItem recipes_SelectByName(String name)
     {
         // Open available reading database

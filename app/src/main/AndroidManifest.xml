@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
     <application
         android:allowBackup="true"
@@ -17,13 +17,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-                >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,10 +31,10 @@
         <activity android:name=".RecipeActivity" />
         <activity
             android:name=".AddRecipeActivity"
-            android:label="@string/title_activity_add_recipe"
-            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true"
-            ></activity>
+            android:label="@string/title_activity_add_recipe"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RecipeListActivity"></activity>
     </application>
 
 </manifest>
