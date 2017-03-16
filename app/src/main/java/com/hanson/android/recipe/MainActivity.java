@@ -1,6 +1,10 @@
 package com.hanson.android.recipe;
 
 import android.content.Intent;
+import android.database.SQLException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,15 +20,61 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.hanson.android.recipe.Helper.DBHelper;
 import com.hanson.android.recipe.dummy.DummyContent;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
+    private DBHelper mDBhelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        //mDBhelper = new DBHelper(this);
+
+//        try
+//        {
+//            mDBhelper.open();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        /* CATEGORY = "category";
+        RECIPENAME = "recipename";
+        AUTHOR = "author";
+        UPLOADDATE = "uploaddate";
+        HOWTO = "howto";
+        DESCRIPTION = "description";
+        THUMBNAIL = "thumbnail";
+        MAINIMG = "mainimg";
+        LIKECOUNT = "likecount";
+        _RECIPESTABLENAME = "recipes";
+//        */
+//        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.imgr_main_bibimbap);
+//        byte[] imgresource = mDBhelper.getByteArrayFromDrawable(image);
+//
+//        // 시스템으로부터 현재시간(ms) 가져오기
+//        long now = System.currentTimeMillis();
+//        // Data 객체에 시간을 저장한다.
+//        Date date = new Date(now);
+//        // 각자 사용할 포맷을 정하고 문자열로 만든다.
+//        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        String strNow = sdfNow.format(date);
+//        mDBhelper.recipes_insertColumn("Korea", "Bibimbap", "Shyjoo",strNow, "1. Prepare and cook ingredients as below.",
+//               "Bibimbap (비빔밥) is probably one of the most well-known and beloved Korean dishes to many people.",
+//                imgresource, imgresource, 0 );
+//        mDBhelper.recipes_statemet("Korea", "Bibimbap", "Shyjoo",strNow, "1. Prepare and cook ingredients as below.",
+//               "Bibimbap (비빔밥) is probably one of the most well-known and beloved Korean dishes to many people.",
+//                0 );
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -127,5 +177,13 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    @Override
+    protected void onDestroy() {
+        mDBhelper.close();
+        super.onDestroy();
+    }
+
 
 }

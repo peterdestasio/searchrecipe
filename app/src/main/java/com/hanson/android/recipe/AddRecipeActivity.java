@@ -1,5 +1,8 @@
 package com.hanson.android.recipe;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -18,11 +21,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hanson.android.recipe.Helper.DBHelper;
+import com.hanson.android.recipe.Helper.ImageHelper;
 import com.hanson.android.recipe.Model.RecipeItem;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -43,7 +54,16 @@ public class AddRecipeActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private Button btn_addNewRecipe;
-    TextView newName;
+    private EditText newName;
+    private TextView newAuthor;
+    private Spinner newCounty;
+    private ImageView newMainImg;
+    private EditText newDescription;
+    private ListView newIngredientList;
+    private EditText newHowto;
+
+    ImageHelper imageHelper = new ImageHelper();
+    DBHelper dbHepler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +80,13 @@ public class AddRecipeActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter.add(new AddRecipeFragment());
+        mSectionsPagerAdapter.add(new AddIngredientFragment());
+        mSectionsPagerAdapter.add(new AddHowtoFragment());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         btn_addNewRecipe = (Button)findViewById(R.id.btn_Add_recipeAdd);
@@ -71,14 +95,130 @@ public class AddRecipeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                newName = (TextView) findViewById(R.id.txt_Add_NewName);
-                Toast.makeText(v.getContext(), newName.getText(), Toast.LENGTH_SHORT).show();
+                newMainImg = (ImageView)findViewById(R.id.imgv_Add_Image);
+                newName = (EditText)findViewById(R.id.txt_Add_NewName);
+                newAuthor = (TextView)findViewById(R.id.txt_Add_Author);
+                newCounty = (Spinner)findViewById(R.id.spinner_Add_Country);
+                newDescription = (EditText)findViewById(R.id.txt_Add_Description);
+                newIngredientList = (ListView)findViewById(R.id.ListView_Add_Ingredient);
+                newHowto = (EditText)findViewById(R.id.txt_ADD_Howto);
+
+                byte[] makeMainImg;
+                byte[] makeThumbnail;
+                String makeRecipeName;
+                String makeDescription;
+                String makeAuthor;
+                String makeCategory;
+                String makeHowto;
+                Date today = new Date();
+                ArrayList<String> makeIndeList = new ArrayList<String>();
+
+                if(newMainImg.getDrawable() != null)
+                {
+                    BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imgv_Add_Image)).getDrawable();
+                    Bitmap bitmap = d.getBitmap();
+                    Bitmap thBitmap = imageHelper.getThubmail(bitmap);
+                    makeMainImg = imageHelper.getByteArrayFromBitmap(bitmap);
+                    makeThumbnail = imageHelper.getByteArrayFromBitmap(thBitmap);
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Please, pick your picture!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (newName.getText() != null && !newName.getText().toString().isEmpty()){
+                    makeRecipeName = newName.getText().toString();
+                    //Toast.makeText(v.getContext(), makeRecipeName, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Please, input new recipe name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                makeAuthor = newAuthor.getText().toString();
+
+                if (newCounty.getSelectedItem() != null && !newCounty.getSelectedItem().toString().isEmpty()){
+                    makeCategory = newCounty.getSelectedItem().toString();
+                    //Toast.makeText(v.getContext(), makeCategory, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Please, select the Country!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (newDescription.getText() != null && !newDescription.getText().toString().isEmpty()){
+                    makeDescription = newDescription.getText().toString();
+                    //Toast.makeText(v.getContext(), makeRecipeName, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Please, input new description!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                if (newIngredientList.getCount() > 0 )
+                {
+                    for (int i=0; i <newIngredientList.getCount(); i++)
+                    {
+                        makeIndeList.add(newIngredientList.getItemAtPosition(i).toString());
+                    }
+
+                    //Toast.makeText(v.getContext(), makeIndeList.get(0).toString(), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Please, input your ingredients!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (newHowto.getText() != null && !newHowto.getText().toString().isEmpty()){
+                    makeHowto = newHowto.getText().toString();
+                    //Toast.makeText(v.getContext(), makeRecipeName, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Please, input how to cook this recipe!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                //Toast.makeText(v.getContext(), newName.getText(), Toast.LENGTH_SHORT).show();
+                //Connect DB
+                DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
+
+                dbHelper.recipes_Insert(makeCategory, makeRecipeName, makeAuthor, today.toString(),
+                makeHowto, makeDescription,
+                makeThumbnail, makeMainImg, 0);
+                int makeRecipeid = dbHelper.recipes_GetIdByName(makeRecipeName);
+                if (makeRecipeid != -1)
+                {
+                   for(int i=0; i < makeIndeList.size(); i++)
+                   {
+                       dbHelper.ingredients_Insert(makeRecipeid, makeIndeList.get(i));
+                   }
+
+                    Toast.makeText(v.getContext(), "Completed to add your recipe!!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(v.getContext(), "Upload Failed ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
             }
         });
 
 
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
@@ -121,6 +261,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -135,28 +276,24 @@ public class AddRecipeActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+        private ArrayList<Fragment> _fragments;
 
         public SectionsPagerAdapter(FragmentManager fm)
         {
-            super(fm);
+           super(fm);
+            this._fragments = new ArrayList<Fragment>();
+        }
+
+        public void add(Fragment fragment) {
+            this._fragments.add(fragment);
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position)
-            {
-                case 0:
-                    return new AddRecipeFragment();
-                case 1:
-                    return new AddIngredientFragment();
-                case 2:
-                    return new AddHowtoFragment();
-            }
 
-            return  null;
+            return  this._fragments.get(position);
         }
 
         @Override

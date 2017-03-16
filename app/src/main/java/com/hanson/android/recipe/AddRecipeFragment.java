@@ -32,7 +32,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.hanson.android.recipe.Helper.ImageHelper;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,6 +46,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class AddRecipeFragment extends Fragment {
 
+    ImageHelper imageHelper = new ImageHelper();
     TextView recipeName;
     TextView author;
     Spinner country;
@@ -52,7 +56,7 @@ public class AddRecipeFragment extends Fragment {
     //variable for camera
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
-    private static final int CROP_FROM_CAMERA = 2;
+   // private static final int CROP_FROM_CAMERA = 2;
 
     private Uri mImageCaptureUri;
     private ImageView mPhotoImageView;
@@ -67,6 +71,7 @@ public class AddRecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+        setRetainInstance(true);
         camera = (ImageButton) view.findViewById(R.id.btn_Add_Camera);
         mPhotoImageView = (ImageView) view.findViewById(R.id.imgv_Add_Image);
         //Check and ask for permissions in version Android API 23 and above.
@@ -107,10 +112,10 @@ public class AddRecipeFragment extends Fragment {
                 };
 
                 new AlertDialog.Builder(getContext())
-                        .setTitle("업로드할 이미지 선택")
-                        .setPositiveButton("사진촬영", cameraListener)
-                        .setNeutralButton("앨범선택", albumListener)
-                        .setNegativeButton("취소", cancelListener)
+                        .setTitle("Select your image where from")
+                        .setPositiveButton("take pic", cameraListener)
+                        .setNeutralButton("Gallery", albumListener)
+                        .setNegativeButton("Cancel", cancelListener)
                         .show();
             }
         });
@@ -125,7 +130,7 @@ public class AddRecipeFragment extends Fragment {
 
     private void doTakeAlbumAction()
     {
-        // 앨범 호출
+        // Call to photo gallery
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         intent.setType("image/*");
@@ -137,19 +142,29 @@ public class AddRecipeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK)
         {
+            //from camera
             if (requestCode == PICK_FROM_CAMERA)
             {
                 Bundle extra = data.getExtras();
                 if (extra != null) {
                     //Toast.makeText(this.getContext(), "ok", Toast.LENGTH_SHORT).show();
-                    Bitmap photo = extra.getParcelable("data");
-                    mPhotoImageView.setImageBitmap(photo);
+                    Bitmap photo = (Bitmap) extra.getParcelable("data");
+                    //Bitmap rphoto = Bitmap.createScaledBitmap(photo, 350, 200, true);
+                    //Toast.makeText(getContext(), rphoto.getHeight(),Toast.LENGTH_SHORT).show();
+                    mPhotoImageView.setImageBitmap(imageHelper.resizeImage(photo));
+
                 }
             }
-            else
+            else //from photo gallery
             {
                 Uri imageUri = data.getData();
-                mPhotoImageView.setImageURI(imageUri);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imageUri);
+                    mPhotoImageView.setImageBitmap(imageHelper.resizeImage(bitmap));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
         //mPhotoImageView.setImageURI(data.getData());

@@ -22,8 +22,10 @@ public class AddHowtoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_add_howto, container, false);
+        setRetainInstance(true);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_howto, container, false);
+        return view;
     }
 
 }

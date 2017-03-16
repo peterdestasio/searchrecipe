@@ -40,6 +40,7 @@ public class AddIngredientFragment extends Fragment {
 
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_add_ingredient, container, false);
+        setRetainInstance(true);
 
         //set hiding keybord
         inputMethodManager = (InputMethodManager)this.getActivity().getSystemService(this.getContext().INPUT_METHOD_SERVICE);

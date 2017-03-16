@@ -7,6 +7,12 @@
     tools:context="com.hanson.android.recipe.HomeFragment">
 
 
+    <TextView
+        android:id="@+id/txt_DBresult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="0dp"

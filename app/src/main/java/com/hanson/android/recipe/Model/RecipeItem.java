@@ -1,5 +1,7 @@
 package com.hanson.android.recipe.Model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 import static android.R.attr.name;
@@ -9,31 +11,31 @@ import static android.R.attr.name;
  * Recipe Item Data Model
  */
 
-public class RecipeItem implements Serializable {
-    private String id;
+public class RecipeItem {
+    private int id;
     private String category;
     private String recipeName;
     private String author;
     private String uploadDate;
     private String howTo;
     private String description;
-    private int thumbnail;
-    private String mainImg;
+    private byte[] thumbnail;
+    private byte[] mainImg;
     private int likeCount;
 
-    public String get_id(){ return id; }
+    public int get_id(){ return id; }
     public String get_category(){return category;}
     public String get_recipeName(){return recipeName;}
     public String get_author(){return author;}
     public String get_uploadDate(){return uploadDate;}
     public String get_howTo(){return howTo;}
     public String get_Description(){return description;}
-    public int get_thumbnail(){return thumbnail;}
-    public String get_mainImg(){return mainImg;}
+    public byte[] get_thumbnail(){return thumbnail;}
+    public byte[] get_mainImg(){return mainImg;}
     public int get_likeCount(){return likeCount;}
 
-    public RecipeItem(String id, String category, String recipeName, String author, String uploadDate,
-                      String howTo, String description, int thumbnail, String mainImg, int likeCount) {
+    public RecipeItem(int id, String category, String recipeName, String author, String uploadDate,
+                      String howTo, String description, byte[] thumbnail, byte[] mainImg, int likeCount) {
         this.id = id;
         this.category = category;
         this.recipeName = recipeName;
