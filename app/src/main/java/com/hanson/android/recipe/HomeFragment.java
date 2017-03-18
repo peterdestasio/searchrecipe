@@ -217,29 +217,10 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        ArrayList<CategoryItem> categoryList = dbHelper.recipes_SelectCategory();
-        String tempcategory = "";
-        for (int i =0 ; i < categoryList.size(); i++)
-        {
-            tempcategory += categoryList.get(i).get_category() + "\n";
-        }
-
         TextView resultTextView = (TextView) view.findViewById(R.id.txt_DBresult);
-        resultTextView.setText(tempcategory);
+        //resultTextView.setText(tempcategory);
 
-        newList = dbHelper.recipes_SelectNew(); //new ArrayList<RecipeItem>();
-//        newList.add(new RecipeItem("003", "Korea", "Bulgoggi", "shyjoo", today.toString(),
-//                "1. beef \n 2. vegetable and source \n 3. mix", "Korean traditional food2",
-//                ic_menu_camera,
-//                "", 0));
-//        newList.add(new RecipeItem("002", "Korea", "Kimbap", "shyjoo", today.toString(),
-//                "1. rice \n 2. hubs and egg \n 3. minx", "Korean traditional food",
-//                ic_menu_camera,
-//                "", 0));
-//        newList.add(new RecipeItem("001", "Korea", "Bibimbap", "shyjoo", today.toString(),
-//                "1. rice \n 2. hubs and egg \n 3. minx", "Korean traditional food",
-//                ic_menu_camera,
-//                "", 0));
+        newList = dbHelper.recipes_SelectNew();
 
         newGridView.setAdapter(new MainRecipeAdapter(this.getContext(), newList, R.layout.fragment_home_recipeitem));
 
@@ -260,18 +241,6 @@ public class HomeFragment extends Fragment {
 
         bestList = dbHelper.recipes_SelectBest();
 
-//        bestList.add(new RecipeItem("001", "Korea", "Bibimbap", "shyjoo", today.toString(),
-//                "1. rice \n 2. hubs and egg \n 3. minx", "Korean traditional food",
-//                ic_menu_camera,
-//                "", 0));
-//        bestList.add(new RecipeItem("002", "Korea", "Kimbap", "shyjoo", today.toString(),
-//                "1. rice \n 2. hubs and egg \n 3. minx", "Korean traditional food",
-//                ic_menu_camera,
-//                "", 0));
-//        bestList.add(new RecipeItem("003", "Korea", "Bulgoggi", "shyjoo", today.toString(),
-//                "1. beef \n 2. vegetable and source \n 3. mix", "Korean traditional food2",
-//                ic_menu_camera,
-//                "", 0));
         bestGridView.setAdapter(new MainRecipeAdapter(this.getContext(), bestList, R.layout.fragment_home_recipeitem));
 
         bestGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -279,17 +248,12 @@ public class HomeFragment extends Fragment {
                                     int position, long id) {
                 RecipeItem selectRecipe = bestList.get(position);
                 Intent intent = new Intent(getActivity(), RecipeActivity.class);
-                intent.putExtra("recipe", selectRecipe.get_id());
+                intent.putExtra("recipe", selectRecipe.get_recipeName());
                 startActivity(intent);
                 //Toast.makeText(view.getContext(),selectRecipe.get_recipName(),Toast.LENGTH_SHORT).show();
             }
         });
         return view;
-    }
-
-    public void SetData()
-    {
-
     }
 
 }

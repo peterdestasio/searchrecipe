@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_login"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Login" />
+    <group android:id="@+id/group_home"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_home"
             android:title="Home" />
+    </group>
+    <group android:id="@+id/group_navi"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_category"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_category"
             android:title="Category" />
         <item
             android:id="@+id/nav_search"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_search"
             android:title="Search Recipes" />
         <item
             android:id="@+id/nav_add"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Add Recipe" />
+            android:icon="@drawable/ic_addrecipe"
+            android:title="Add Recipe"
+            android:visible="false" />
+    </group>
+    <group android:id="@+id/group_login"
+    android:checkableBehavior="single" >
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_login"
+            android:title="Login" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_logout"
             android:title="Logout"
-            android:visible="false"
-            />
+            android:visible="false" />
         <item
             android:id="@+id/nav_info"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Information"
-            />
+            android:icon="@drawable/ic_info"
+            android:title="Information" />
     </group>
-
 </menu>

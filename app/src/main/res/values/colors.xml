@@ -10,4 +10,5 @@
     <color name="colorFont3">#a2a8b4</color>
     <color name="colorBG">#f9f9f9</color>
     <color name="colorBorder">#eaeaea</color>
+    <color name="colorFragmentBG">#454546</color>
 </resources>

@@ -49,14 +49,16 @@
         <Button
             android:id="@+id/btn_Add_recipeAdd"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.20"
-            android:text="Add"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/container"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
             android:layout_marginRight="16dp"
-            app:layout_constraintRight_toRightOf="parent" />
+            android:layout_marginTop="16dp"
+            android:layout_weight="0.20"
+            android:background="@drawable/deepbluebutton"
+            android:text="Add Recipe"
+            android:textColor="@android:color/white"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container" />
 
     </android.support.constraint.ConstraintLayout>
 

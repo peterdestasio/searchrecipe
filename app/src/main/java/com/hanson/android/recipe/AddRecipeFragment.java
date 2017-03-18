@@ -2,9 +2,11 @@ package com.hanson.android.recipe;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,8 +27,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +43,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -47,10 +52,11 @@ import static android.app.Activity.RESULT_OK;
 public class AddRecipeFragment extends Fragment {
 
     ImageHelper imageHelper = new ImageHelper();
+    InputMethodManager imm;
     TextView recipeName;
     TextView author;
     Spinner country;
-    EditText howto;
+    EditText description;
     ImageButton camera;
 
     //variable for camera
@@ -72,6 +78,26 @@ public class AddRecipeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_add_recipe, container, false);
         setRetainInstance(true);
+
+        //set userid
+        SharedPreferences pref = view.getContext().getSharedPreferences("Login", Activity.MODE_PRIVATE);
+        String userID = pref.getString("userID","");
+        author = (TextView) view.findViewById(R.id.txt_Add_Author);
+        author.setText(userID);
+
+        //hidding keybord
+        imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        description = (EditText)view.findViewById(R.id.txt_Add_Description);
+
+        RelativeLayout root = (RelativeLayout) view.findViewById(R.id.root_Add_Recipe);
+        root.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                imm.hideSoftInputFromWindow(description.getWindowToken(), 0);
+            }
+        });
+
         camera = (ImageButton) view.findViewById(R.id.btn_Add_Camera);
         mPhotoImageView = (ImageView) view.findViewById(R.id.imgv_Add_Image);
         //Check and ask for permissions in version Android API 23 and above.
