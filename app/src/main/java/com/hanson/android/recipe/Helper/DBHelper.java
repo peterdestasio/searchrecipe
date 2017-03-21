@@ -41,11 +41,42 @@ public class DBHelper extends SQLiteOpenHelper
         db.execSQL("CREATE TABLE INGREDIENTS( _id INTEGER PRIMARY KEY AUTOINCREMENT, recipeID INTEGER, ingreName TEXT);");
 
         db.execSQL("CREATE TABLE LIKECOUNT( _id INTEGER PRIMARY KEY AUTOINCREMENT, userID TEXT, recipeID INTEGER);");
+
+        db.execSQL("CREATE TABLE USER( _id INTEGER PRIMARY KEY AUTOINCREMENT, userID TEXT, password TEXT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public  void  user_Insert(String userid, String password)
+    {
+        // open read and write database
+        SQLiteDatabase db = getWritableDatabase();
+        // execute insert query
+        db.execSQL("INSERT INTO USER VALUES(null, '" + userid + "', '" + password + "');");
+
+        db.close();
+    }
+
+    public int user_Allcount()
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        int count = 0;
+        // Get all recipes data
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM USER", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                count = cursor.getInt(0);
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return count;
     }
 
     public void recipes_Insert(String category, String recipeName, String author,
@@ -352,26 +383,5 @@ public class DBHelper extends SQLiteOpenHelper
         db.close();
         return likeNY;
     }
-
-    public String getResult() {
-        // 읽기가 가능하게 DB 열기
-        SQLiteDatabase db = getReadableDatabase();
-        String result = "";
-
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        Cursor cursor = db.rawQuery("SELECT * FROM RECIPES", null);
-        while (cursor.moveToNext()) {
-            result += cursor.getString(0)
-                    + " : "
-                    + cursor.getString(1)
-                    + " | "
-                    + cursor.getString(2)
-                    + "\n";
-        }
-        cursor.close();
-        db.close();
-        return result;
-    }
-
 
 }
