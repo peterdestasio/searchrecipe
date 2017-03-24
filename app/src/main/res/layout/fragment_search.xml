@@ -41,5 +41,18 @@ tools:context="com.hanson.android.recipe.SearchFragment">
     android:onClick="search1"
     android:text="Search" />
 
+    <GridView
+        android:id="@+id/gridSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonSearch"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/typeIngredient"
+        android:background="@drawable/border"
+        android:numColumns="auto_fit"
+        android:padding="2dp"
+        android:columnWidth="100dp"/>
+
 
 </RelativeLayout>
