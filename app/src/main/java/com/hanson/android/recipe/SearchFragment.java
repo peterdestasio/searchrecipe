@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +63,17 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listItems);
         gridView.setAdapter(adapter);
 
+        //added a click listener on the item of the gridview
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //delete element onclick
+                Object o = gridView.getItemAtPosition(position);
+                listItems.remove(position);
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
         addButton.setOnClickListener(this);
         buttonSearch.setOnClickListener(this);
         return view;
@@ -71,16 +83,30 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if (v.getId() == addButton.getId()) {
-            listItems.add(editText.getText().toString());
-            adapter.notifyDataSetChanged();
+            if (clickCounter < 20) { //set max 20 ingredients
+                if (editText.getText().toString().trim().length() > 0) {  //check if inserted a blank string
+                      if(listItems.contains(editText.getText().toString())){
+                        Toast toast = Toast.makeText(getContext(), "ingredient duplicated", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }else {
+                        listItems.add(editText.getText().toString());
+                        adapter.notifyDataSetChanged();
+                        clickCounter++;
+                    }
+                } else {
+                    Toast toast = Toast.makeText(getContext(), "Please insert the text", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } else {
+                addButton.setClickable(false);
+                Toast toast = Toast.makeText(getContext(), "Max number of ingredients reached", Toast.LENGTH_SHORT);
+                toast.show();
+            }
 
         }
 
         if (v.getId() == buttonSearch.getId()) {
             testMaxDuplicates();
-
-
-
             //testingredients_selectIdRecipeByIngredientName();
 
             //testCountIngredients();
