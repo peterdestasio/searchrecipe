@@ -13,9 +13,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import com.hanson.android.recipe.Model.CategoryItem;
+import com.hanson.android.recipe.Model.RecipeIngr;
 import com.hanson.android.recipe.Model.RecipeItem;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -132,6 +134,50 @@ public class DBHelper extends SQLiteOpenHelper
 
 
     }
+
+    //return the id of the recipes based on ingredientName TO FIX!
+    public ArrayList<Integer> ingredients_selectIdRecipeByIngredientName(ArrayList<String> ingredientsName){
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<Integer> idRecipes = new ArrayList<>();
+        // query the db findind the recipeID through the
+        for(int i =0; i<ingredientsName.size();i++) {
+            Cursor cursor = db.rawQuery("SELECT recipeID FROM INGREDIENTS WHERE ingreName = " + ingredientsName.get(1), null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    idRecipes.add(cursor.getInt(0));
+                }
+            }
+            cursor.close();
+            db.close();
+        }
+        return idRecipes;
+
+    }
+
+
+    /*
+    return the number of ingredients of a recipe based on idRecipe TO FIX!
+     */
+    public int countIngredientsPerRecipes(int idRecipes){
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        int count = 0;
+
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM INGREDIENTS WHERE recipeID= " + idRecipes, null );
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                count++;
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
+
 
     public int recipes_GetIdByName(String name)
     {
