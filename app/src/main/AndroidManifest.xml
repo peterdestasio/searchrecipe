@@ -33,10 +33,11 @@
             android:name=".AddRecipeActivity"
             android:exported="true"
             android:label="@string/title_activity_add_recipe"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".RecipeListActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".TempSearchResultActivity"></activity>
     </application>
 
 </manifest>

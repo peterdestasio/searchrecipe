@@ -370,6 +370,37 @@ public class DBHelper extends SQLiteOpenHelper
         return  null;
     }
 
+    public RecipeItem recipes_SelectById(int id)
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM RECIPES WHERE _id = " + id, null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                RecipeItem recipe = new RecipeItem(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getBlob(7),
+                        cursor.getBlob(8),
+                        cursor.getInt(9)
+                );
+                cursor.close();
+                db.close();
+                return recipe;
+            }
+
+
+        }
+        return  null;
+    }
+
     public int recipes_AddLike(String userId, int recipeId)
     {
         // Open available reading database

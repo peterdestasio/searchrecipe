@@ -1,6 +1,7 @@
 package com.hanson.android.recipe;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -138,6 +139,17 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "I'm searching", Toast.LENGTH_SHORT);
             toast.show();
 
+            /*
+            Hi peter :)
+            I just make sure how to sent to RrecipeListActivity
+            So I made test command below .. for you
+            Also I made TempSearchResultActivity for test
+
+            when you make your part, you may need this code
+            and you can understand how to sand to recipe information
+             */
+            Intent intent = new Intent(getActivity(), TempSearchResultActivity.class);
+            startActivity(intent);
         }
 
     }
