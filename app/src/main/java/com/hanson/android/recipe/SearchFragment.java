@@ -179,7 +179,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         Log.d("aaaaaa",Integer.toString(contatore));
 
     }
-
+///examolke
     /*
     a function that search witch is the name with the maximux duplicates and his uccurrencies
     @param idRecipes an array of Int that represents all of the possibles idRecipes
