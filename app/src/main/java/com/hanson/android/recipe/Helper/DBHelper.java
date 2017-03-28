@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import com.hanson.android.recipe.Model.CategoryItem;
 import com.hanson.android.recipe.Model.RecipeIngr;
 import com.hanson.android.recipe.Model.RecipeItem;
+import com.hanson.android.recipe.Model.SearchResultItem;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
@@ -135,6 +136,34 @@ public class DBHelper extends SQLiteOpenHelper
 
     }
 
+    //Miju
+    public ArrayList<SearchResultItem> ingredients_selectRecipeByIngredientName(ArrayList<String> ingredientsName){
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<SearchResultItem> idRecipes = new ArrayList<>();
+        String strNames = "";
+        for (int i=0; i < ingredientsName.size(); i++)
+        {
+            strNames += "ingreName = '" + ingredientsName.get(i) + "'";
+            if (i != ingredientsName.size()-1)
+            {
+                strNames += " OR ";
+            }
+        }
+
+        Cursor cursor = db.rawQuery("SELECT recipeID, count(*) FROM INGREDIENTS WHERE "+
+                strNames + " GROUP BY recipeID", null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                idRecipes.add(new SearchResultItem(cursor.getInt(0), cursor.getInt(1)));
+            }
+        }
+        cursor.close();
+        db.close();
+        return idRecipes;
+
+    }
+
     //return the id of the recipes based on ingredientName TO FIX!
     public ArrayList<Integer> ingredients_selectIdRecipeByIngredientName(ArrayList<String> ingredientsName){
         // Open available reading database
@@ -142,15 +171,16 @@ public class DBHelper extends SQLiteOpenHelper
         ArrayList<Integer> idRecipes = new ArrayList<>();
         // query the db findind the recipeID through the
         for(int i =0; i<ingredientsName.size();i++) {
-            Cursor cursor = db.rawQuery("SELECT recipeID FROM INGREDIENTS WHERE ingreName = " + ingredientsName.get(1), null);
+            Cursor cursor = db.rawQuery("SELECT recipeID FROM INGREDIENTS WHERE ingreName = '" + ingredientsName.get(1) + "'", null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     idRecipes.add(cursor.getInt(0));
                 }
             }
             cursor.close();
-            db.close();
         }
+
+        db.close();
         return idRecipes;
 
     }

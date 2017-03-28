@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.hanson.android.recipe.Helper.DBHelper;
 import com.hanson.android.recipe.Model.IngredientItem;
+import com.hanson.android.recipe.Model.SearchResultItem;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -139,6 +140,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "I'm searching", Toast.LENGTH_SHORT);
             toast.show();
 
+
+            //fining recipeid and count by ingredient
+            DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
+            ArrayList<SearchResultItem> resultList = dbHelper.ingredients_selectRecipeByIngredientName(listItems);
             /*
             Hi peter :)
             I just make sure how to sent to RrecipeListActivity
