@@ -63,6 +63,38 @@ public class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    //registration check function
+    public boolean user_IsUsernameFree(String userId)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM USER WHERE userID = '" + userId + "'", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                return false;
+            }
+        }
+        cursor.close();
+        db.close();
+        return true;
+    }
+
+    //login function
+    public boolean user_Login(String userId, String password)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM USER WHERE userID = '" + userId + "' AND password = '"+password+"'", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                return true;
+            }
+        }
+        cursor.close();
+        db.close();
+        return false;
+    }
+
     public int user_Allcount()
     {
         // Open available reading database

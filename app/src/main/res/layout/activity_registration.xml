@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="15dp"
-        android:text="Login"
+        android:text="Registration"
         android:textAllCaps="true"
         android:textSize="24sp" />
 
@@ -63,22 +63,36 @@
         android:paddingLeft="20dp"
         android:textColorHint="#dddddd" />
 
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Repeat your password" />
+
+    <EditText
+        android:id="@+id/etRegRepeatPass"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColorHint="#dddddd" />
+
     <Button
-        android:id="@+id/bRegLogin"
+        android:id="@+id/bRegSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:text="Submit" />
-
-    <TextView
-        android:id="@+id/tvRegLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="Registration is here!"
-        android:textColor="?android:attr/colorEdgeEffect" />
 
 </LinearLayout>

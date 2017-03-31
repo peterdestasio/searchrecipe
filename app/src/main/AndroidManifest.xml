@@ -37,7 +37,8 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".RecipeListActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".TempSearchResultActivity"></activity>
+        <activity android:name=".TempSearchResultActivity" />
+        <activity android:name=".RegistrationActivity"></activity>
     </application>
 
 </manifest>
