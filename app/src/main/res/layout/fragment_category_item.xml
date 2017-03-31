@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:orientation="horizontal"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/colorBG">
 
     <ImageView
         android:id="@+id/categoryitem_img"
