@@ -8,4 +8,5 @@
         android:id="@+id/listVeiw_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
+
 </FrameLayout>
