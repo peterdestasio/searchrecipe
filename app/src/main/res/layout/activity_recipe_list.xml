@@ -13,13 +13,14 @@
         android:minHeight="20dp"
         android:text="TextView"
         android:textSize="30dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:fontFamily="@string/title_activity_recipy"/>
 
     <ListView
         android:id="@+id/listview_recipelist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:choiceMode="singleChoice"
         android:divider="#a7a6ab"
         android:dividerHeight="1dp" />

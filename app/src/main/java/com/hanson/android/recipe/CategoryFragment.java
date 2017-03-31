@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.hanson.android.recipe.Helper.DBHelper;
 import com.hanson.android.recipe.Model.CategoryItem;
