@@ -28,7 +28,8 @@ import java.util.TreeMap;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Pierluigi De Stasio
+ * SearchFragment Subclass
  */
 public class SearchFragment extends Fragment implements View.OnClickListener {
 
@@ -71,6 +72,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //delete element onclick
                 Object o = gridView.getItemAtPosition(position);
                 listItems.remove(position);
+                clickCounter--;
                 adapter.notifyDataSetChanged();
 
             }
@@ -108,167 +110,103 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         }
 
         if (v.getId() == buttonSearch.getId()) {
-            testMaxDuplicates();
-            //testingredients_selectIdRecipeByIngredientName();
 
-            //testCountIngredients();
-             /*
-            DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
-
-            ArrayList<String> interi = dbHelper.ingredients_selectIdRecipeByIngredientName("rice");
-
-            ArrayList<String> stringhe = dbHelper.ingredients_SelectByRecipeId(1);
-
-            for (int i = 0; i < stringhe.size(); i++) {
-                Log.d("AAAAAAAAAAAAAAAAAAa: ", stringhe.get(i).toString());
+            if (listItems.isEmpty()){ //if user didin't put any ingredient display error message
+                Toast toast = Toast.makeText(getContext(), "You didn't insert any ingredient", Toast.LENGTH_SHORT);
+                toast.show();
             }
+            else {
+                //finding recipeid and count by ingredient
+                DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
+                ArrayList<SearchResultItem> resultList = dbHelper.ingredients_selectRecipeByIngredientName(listItems);
 
-            if(interi.size()>0) {
-                for (int i = 0; i < interi.size(); i++) {
-                    Log.d("MyTag", interi.get(i).toString());
+                if(resultList.isEmpty()){ //if didn't find anything display error message
+                    Intent intent = new Intent(getActivity(), RecipeListActivity.class);
+                    intent.putExtra("title", "Sorry, we didn't match any ingredient!");
+                    intent.putExtra("list",resultList);
+                    startActivity(intent);
+                    dbHelper.close();
+
+                }else{
+                    ArrayList<Integer> idRecipes = new ArrayList<>();
+                    ArrayList<Integer> matches = new ArrayList<>();
+
+                    //filling the array of idRecipes
+                    for(int i=0;i<resultList.size();i++){
+                        idRecipes.add(resultList.get(i).get_recipeId());
+                    }
+
+                    //filling the array of ingredients matches
+                    for (int j=0;j<resultList.size();j++){
+                        matches.add(resultList.get(j).get_ingrCount());
+                    }
+
+                    ArrayList<Integer> positionsfound = findPosition(matches, findMax(matches));
+                    ArrayList<Integer> idRecipesSelected = new ArrayList<>();
+
+                    //filling the array of the id only for the selected Recipes
+                    for(int k=0; k<positionsfound.size();k++){
+                        idRecipesSelected.add(idRecipes.get(positionsfound.get(k)));
+                    }
+
+
+                        Intent intent = new Intent(getActivity(), RecipeListActivity.class);
+                        intent.putExtra("title", "Matching: "+ findMax(matches) + " ingredients");
+                        intent.putExtra("list",idRecipesSelected);
+                        startActivity(intent);
+
+                    dbHelper.close();
                 }
 
 
+
             }
 
-            for(int i=0; i<listItems.size(); i++){
-
-                Log.d("My Tag: ",listItems.get(i));
-            }
-            */
-            //to do
-            Toast toast = Toast.makeText(getContext(), "I'm searching", Toast.LENGTH_SHORT);
-            toast.show();
 
 
-            //fining recipeid and count by ingredient
-            DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
-            ArrayList<SearchResultItem> resultList = dbHelper.ingredients_selectRecipeByIngredientName(listItems);
-            /*
-            Hi peter :)
-            I just make sure how to sent to RrecipeListActivity
-            So I made test command below .. for you
-            Also I made TempSearchResultActivity for test
-
-            when you make your part, you may need this code
-            and you can understand how to sand to recipe information
-             */
-            Intent intent = new Intent(getActivity(), TempSearchResultActivity.class);
-            startActivity(intent);
         }
 
-    }
-
-    //TO FIX!!!!!!!!!!1
-    public void testingredients_selectIdRecipeByIngredientName(){
-        DBHelper dbHelper = new DBHelper(getContext(), "Recupes.db",null,1);
-        ArrayList<String> ingredientsName = new ArrayList<>();
-        ingredientsName.add("onion");
-        ArrayList<Integer> idRecipes = dbHelper.ingredients_selectIdRecipeByIngredientName(ingredientsName);
-        Log.d("TEST: ", Integer.toString(idRecipes.get(0)));
-
-
-    }
-
-
-        //to FIX!
-    public void testCountIngredients(){
-
-        DBHelper dbHelper = new DBHelper(getContext(), "Recipes.db", null, 1);
-        int contatore = dbHelper.countIngredientsPerRecipes(88);
-        Log.d("aaaaaa",Integer.toString(contatore));
-
-    }
-///examolke
-    /*
-    a function that search witch is the name with the maximux duplicates and his uccurrencies
-    @param idRecipes an array of Int that represents all of the possibles idRecipes
-     */
-    public Map.Entry<Integer, Integer> findMaxDuplicates(ArrayList<Integer> idRecipes){
-        TreeMap<Integer, Integer> tmap = new TreeMap<Integer, Integer>();
-        int i = 0;
-        int j = 1;
-
-        while (i<idRecipes.size()){
-            int count = 1;
-            while(j<idRecipes.size()){
-                if(idRecipes.get(i)==idRecipes.get(j)){
-                    count++;
-                    idRecipes.remove(j);
-                }
-                else{
-                    j++;
-                }
-            }
-            tmap.put(idRecipes.get(i),count);
-
-            i++;
-            j=i+1;
-        }
-
-
-        Set set = tmap.entrySet();
-        Iterator iterator = set.iterator();
-        Map.Entry<Integer, Integer> maxEntry = null;
-
-        for (Map.Entry<Integer, Integer> entry : tmap.entrySet())
-        {
-            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
-            {
-                maxEntry = entry;
-            }
-        }
-        Log.d(Integer.toString(maxEntry.getKey()) +"++++++", Integer.toString(maxEntry.getValue())+"RRRRRRRRR");
-    return maxEntry;
-    }
-
-
-    //METHOD THAT TEST MAX DUPLICATES
-    public void testMaxDuplicates(){
-        ArrayList<Integer> integers = new ArrayList<>();
-        integers.add(1);
-        integers.add(1);
-        integers.add(3);
-        integers.add(1);
-        integers.add(2);
-        integers.add(2);
-        integers.add(2);
-        integers.add(2);
-        integers.add(1);
-        Map.Entry<Integer,Integer> mappa = findMaxDuplicates(integers);
-        Log.d("testo i duplicati:" , Integer.toString(mappa.getValue()));
     }
 
     /*
-    TO TEST!
-    researchRecipes method found the possible match
-    @param arrayIngredients (take from user the list of ingredients
+    a function that search witch is the max in an array of int
+    used for retrives the maximum of ingredients matched
+    @param numMatches an array of Int that numbers of the matches
      */
-    public void researchRecipe(ArrayList<String> arrayIngredients){
-        //call the dbHelper
-        DBHelper dbHelper = new DBHelper(getContext(), "Recipes.db", null, 1);
+    public int findMax(ArrayList<Integer> numMatches){
+        int maxValue = numMatches.get(0);
 
-        //find possible recipes calling a query from a db
-        ArrayList<Integer> idPossibleRecipes = new ArrayList<Integer>();
-        idPossibleRecipes = dbHelper.ingredients_selectIdRecipeByIngredientName(listItems);
-
-        //if the query return null we find no recipes
-        if(idPossibleRecipes.isEmpty()){
-            Log.d("Error", "NOT FOUND");
-        }
-        //else check
-        else{
-            int possibleRecipe = findMaxDuplicates(idPossibleRecipes).getKey(); // find the id of the possible recipe
-            int maxDuplicates = findMaxDuplicates(idPossibleRecipes).getValue(); //find the number of the ingredients that we have
-            if(dbHelper.countIngredientsPerRecipes(possibleRecipe)!=maxDuplicates){ //if the occurrencies of the recipe are different from our ingredients
-                Log.d("Error2", "NOT FOUND");
-            }
-            else{
-                Log.d("RECIPE FOUND,ID IS", Integer.toString(possibleRecipe));
+        for (int i = 0; i < numMatches.size(); i++) {
+            if (numMatches.get(i) > maxValue) {
+                maxValue = numMatches.get(i);
             }
         }
-
-
+        return maxValue;
     }
+
+    /*
+   a function that search witch are the positions of the array in case of maxvalues duplicates
+   used for retrives the positions of the maximum an then the id of recipes
+   @param numMatches an array of Int that numbers of the matches
+   return an array of int that shows the positions of the maximum
+    */
+    public ArrayList<Integer> findPosition(ArrayList<Integer> matches, int maxvalue){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(int i =0; i<matches.size();i++){
+            if(matches.get(i)==maxvalue){
+                positions.add(i);
+            }
+        }
+        for (int j =0; j<positions.size(); j++){
+            System.out.println(positions.get(j));
+        }
+        return positions;
+    }
+
+
+
+
+
+
 
 }
