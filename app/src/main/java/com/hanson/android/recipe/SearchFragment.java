@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.hanson.android.recipe.Helper.DBHelper;
 import com.hanson.android.recipe.Model.IngredientItem;
+import com.hanson.android.recipe.Model.RecipeItem;
 import com.hanson.android.recipe.Model.SearchResultItem;
 
 import java.lang.reflect.Array;
@@ -120,10 +121,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
                 ArrayList<SearchResultItem> resultList = dbHelper.ingredients_selectRecipeByIngredientName(listItems);
 
-                if(resultList.isEmpty()){ //if didn't find anything display error message
+                if(resultList.isEmpty()){ //if didn't find anything display error message and reccomend best recipes
+                    ArrayList<Integer> advices = new ArrayList<>();
+                    advices = findBestRecipes();
+
                     Intent intent = new Intent(getActivity(), RecipeListActivity.class);
-                    intent.putExtra("title", "Sorry, we didn't match any ingredient!");
-                    intent.putExtra("list",resultList);
+                    intent.putExtra("title", "Sorry, we didn't match any ingredient! Take a look of our best Recipes!");
+
+                    intent.putExtra("list",advices);
                     startActivity(intent);
                     dbHelper.close();
 
@@ -203,6 +208,23 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         return positions;
     }
 
+    /*
+    this function call the db to find the best recipes and retun an arraylist of integer -> id of best recipes
+     */
+    public ArrayList<Integer> findBestRecipes(){
+        ArrayList<Integer> bestRecipes = new ArrayList<>();
+        DBHelper dbHelper = new DBHelper(getContext(), "Recipes.db", null, 1);
+        ArrayList<RecipeItem> results = dbHelper.recipes_SelectBest();
+        if(results.isEmpty()){
+
+        }
+        else {
+            for(int i=0;i<results.size();i++){
+                bestRecipes.add(results.get(i).get_id());
+            }
+        }
+        return  bestRecipes;
+    }
 
 
 
