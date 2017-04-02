@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.hanson.android.recipe.Helper.DBHelper;
 
 public class LoginActivity extends AppCompatActivity {
-    // EditText userName, userPassword;
+    // EditText userName, userPassword
 
 
     @Override
