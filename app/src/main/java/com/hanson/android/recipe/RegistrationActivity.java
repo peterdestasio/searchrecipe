@@ -12,8 +12,11 @@ import android.widget.Toast;
 
 import com.hanson.android.recipe.Helper.DBHelper;
 
-public class RegistrationActivity extends AppCompatActivity {
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +49,11 @@ public class RegistrationActivity extends AppCompatActivity {
                             if (passLength < 19) {
                                 if (password.equals(password2)) {
                                     if (dbHelper.user_IsUsernameFree(username)) {
-                                        dbHelper.user_Insert(username, password);
-                                        dbHelper.user_Insert(username, password);
+                                        dbHelper.user_Insert(username, sha256(password));
                                         Toast.makeText(v.getContext(), "Registration Complete!", Toast.LENGTH_SHORT).show();
                                         tv_enterPass.setTextColor(Color.BLACK);
                                         tv_enterAcc.setTextColor(Color.BLACK);
                                         tv_repeatPass.setTextColor(Color.BLACK);
-
                                     } else {
                                         Toast.makeText(v.getContext(), "This username is already exist!", Toast.LENGTH_SHORT).show();
                                         tv_enterPass.setTextColor(Color.BLACK);
@@ -93,6 +94,25 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
     }
+
+    public static String sha256(String password) {
+        try{
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {

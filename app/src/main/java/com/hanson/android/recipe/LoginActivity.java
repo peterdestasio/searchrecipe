@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String username = etRegAcc.getText().toString();
                 final String password = etRegPass.getText().toString();
                 DBHelper dbHelper = new DBHelper(v.getContext(), "Recipes.db", null, 1);
-                if (dbHelper.user_Login(username, password)) {
+                if (dbHelper.user_Login(username, RegistrationActivity.sha256(password))) {
                     Toast.makeText(v.getContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
                     SharedPreferences pref = getSharedPreferences("Login", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
