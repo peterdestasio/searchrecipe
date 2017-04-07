@@ -17,7 +17,9 @@ import java.util.ArrayList;
 public class RecipeListActivity extends AppCompatActivity {
 
     ArrayList<RecipeItem> recipes = new ArrayList<>();;
-
+    //Connect with screen elements
+    TextView txtTitle;
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +30,19 @@ public class RecipeListActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();  // Always call the superclass method first
+
         //Connect with screen elements
-        TextView txtTitle = (TextView)findViewById(R.id.txt_recipeListTitle);
-        ListView listView = (ListView)findViewById(R.id.listview_recipelist);
+        txtTitle = (TextView)findViewById(R.id.txt_recipeListTitle);
+        listView = (ListView)findViewById(R.id.listview_recipelist);
 
         //Connect with databeas
         DBHelper dbHelper = new DBHelper(this, "Recipes.db", null, 1);
@@ -72,8 +84,8 @@ public class RecipeListActivity extends AppCompatActivity {
                 //Toast.makeText(view.getContext(),selectRecipe.get_recipName(),Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {

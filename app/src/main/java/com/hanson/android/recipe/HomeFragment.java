@@ -8,7 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,16 +52,31 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Check search recipes menu on the slide menu
+                NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                navigationView.setCheckedItem(R.id.nav_search);
+                //connect to search recipes page
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                SearchFragment searchFragment = new SearchFragment();
+                manager.beginTransaction().replace(R.id.root_layout, searchFragment, searchFragment.getTag()).addToBackStack(null).commit();
+            }
+        });
         GridView newGridView = (GridView)view.findViewById(R.id.GridView_New);
 
         //Connect DB
         DBHelper dbHelper = new DBHelper(getContext(), "Recipes.db", null, 1);
 
-        int userCount = dbHelper.user_Allcount();
-        if (userCount == 0)
-        {
-            dbHelper.user_Insert("shyoo","0000");
-        }
+//        int userCount = dbHelper.user_Allcount();
+//        if (userCount == 0)
+//        {
+//            dbHelper.user_Insert("shyoo","0000");
+//        }
 
         ArrayList<RecipeItem> defaultDataList = dbHelper.recipes_SelectAll();
         if(defaultDataList == null || defaultDataList.size() == 0)

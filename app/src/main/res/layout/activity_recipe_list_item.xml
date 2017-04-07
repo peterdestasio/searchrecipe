@@ -33,13 +33,15 @@
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
             android:text="Writer: "/>
+
         <TextView
             android:id="@+id/listItem_likecount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textSize="20dp"
-            android:text="Like: "/>
+            android:drawableLeft="@drawable/ic_like_list"
+            android:text="Like: "
+            android:textSize="20dp" />
     </LinearLayout>
 
 

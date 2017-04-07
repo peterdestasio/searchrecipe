@@ -21,22 +21,27 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeActivity" />
+        <activity android:name=".RecipeActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AddRecipeActivity"
             android:exported="true"
             android:label="@string/title_activity_add_recipe"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".RecipeListActivity" />
-        <activity android:name=".LoginActivity" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RecipeListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".TempSearchResultActivity" />
         <activity android:name=".RegistrationActivity"></activity>
     </application>

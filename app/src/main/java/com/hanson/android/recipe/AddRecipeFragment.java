@@ -88,13 +88,14 @@ public class AddRecipeFragment extends Fragment {
         //hidding keybord
         imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
         description = (EditText)view.findViewById(R.id.txt_Add_Description);
-
+        recipeName = (EditText)view.findViewById(R.id.txt_Add_NewName);
         RelativeLayout root = (RelativeLayout) view.findViewById(R.id.root_Add_Recipe);
         root.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 imm.hideSoftInputFromWindow(description.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(recipeName.getWindowToken(), 0);
             }
         });
 
@@ -203,40 +204,18 @@ public class AddRecipeFragment extends Fragment {
                 != PackageManager.PERMISSION_GRANTED||
                 ContextCompat.checkSelfPermission(this.getContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this.getContext(),
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this.getActivity(),
                     new String[]{
                             Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA
                     },
                     1052);
-
-        }
-
-    }
-
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-
-        switch (requestCode) {
-            case 1052: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted.
-
-                } else {
-
-
-                    // Permission denied - Show a message to inform the user that this app only works
-                    // with these permissions granted
-
-                }
-                return;
-            }
 
         }
     }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,6 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +66,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     private ListView newIngredientList;
     private EditText newHowto;
 
+    private ImageView navi1;
+    private ImageView navi2;
+    private ImageView navi3;
+
     ImageHelper imageHelper = new ImageHelper();
     DBHelper dbHepler;
 
@@ -77,6 +85,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+        navi1 = (ImageView) findViewById(R.id.imgv_Add_navi1);
+        navi2 = (ImageView) findViewById(R.id.imgv_Add_navi2);
+        navi3 = (ImageView) findViewById(R.id.imgv_Add_navi3);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -88,6 +100,39 @@ public class AddRecipeActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0)
+                {
+                    navi1.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.greenbutton));
+                    navi2.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.graybackground));
+                    navi3.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.graybackground));
+                }
+                else if (position == 1)
+                {
+                    navi1.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.graybackground));
+                    navi2.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.greenbutton));
+                    navi3.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.graybackground));
+                }
+                else
+                {
+                    navi1.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.graybackground));
+                    navi2.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.graybackground));
+                    navi3.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.greenbutton));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         btn_addNewRecipe = (Button)findViewById(R.id.btn_Add_recipeAdd);
         btn_addNewRecipe.setOnClickListener(new View.OnClickListener()
@@ -304,7 +349,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-
             return "OBJECT " + (position + 1);
         }
     }

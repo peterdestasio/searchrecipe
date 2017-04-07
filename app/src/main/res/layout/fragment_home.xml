@@ -31,13 +31,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/recipesideasmain" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="-24dp"
+            app:srcCompat="@drawable/ic_search" />
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="New Recipes"
             android:textColor="@color/colorFont1"
             android:textSize="18sp"

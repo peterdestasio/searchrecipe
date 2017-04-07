@@ -47,20 +47,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Check search recipes menu on the slide menu
-                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                navigationView.setCheckedItem(R.id.nav_search);
-                //connect to search recipes page
-                FragmentManager manager = getSupportFragmentManager();
-                SearchFragment searchFragment = new SearchFragment();
-                manager.beginTransaction().replace(R.id.root_layout, searchFragment, searchFragment.getTag()).addToBackStack(null).commit();
-            }
-        });
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -84,6 +70,12 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
 
         toggle.syncState();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();  // Always call the superclass method first
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
