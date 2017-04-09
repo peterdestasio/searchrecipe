@@ -10,7 +10,9 @@ tools:context="com.hanson.android.recipe.SearchFragment">
     android:id="@+id/textView3"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Please enter the ingredients that you have in your fridge and we will recommend you some awesome recipes! " />
+    android:text="Please enter the ingredients that you have in your fridge and we will recommend you some awesome recipes! "
+    android:textSize="16dp"
+    android:textStyle="bold"/>
 
 <EditText
     android:id="@+id/typeIngredient"
@@ -52,7 +54,8 @@ tools:context="com.hanson.android.recipe.SearchFragment">
         android:background="@drawable/border"
         android:numColumns="auto_fit"
         android:padding="2dp"
-        android:columnWidth="100dp"/>
+        android:columnWidth="100dp"
+        />
 
 
 </RelativeLayout>

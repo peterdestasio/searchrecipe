@@ -145,7 +145,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     for (int j=0;j<resultList.size();j++){
                         matches.add(resultList.get(j).get_ingrCount());
                     }
-
+                    /*
                     ArrayList<Integer> positionsfound = findPosition(matches, findMax(matches));
                     ArrayList<Integer> idRecipesSelected = new ArrayList<>();
 
@@ -159,6 +159,15 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         intent.putExtra("title", "Matching: "+ findMax(matches) + " ingredients");
                         intent.putExtra("list",idRecipesSelected);
                         startActivity(intent);
+
+                        */
+
+                    Intent intent = new Intent(getActivity(), SearchResult.class);
+                    intent.putExtra("idrecipes",idRecipes);
+                    intent.putExtra("matches",matches);
+                    startActivity(intent);
+
+
 
                     dbHelper.close();
                 }

@@ -11,4 +11,6 @@
     <color name="colorBG">#f9f9f9</color>
     <color name="colorBorder">#eaeaea</color>
     <color name="colorFragmentBG">#454546</color>
+    <color name="grey">#d2cece</color>
+    <color name="white">#fffefe</color>
 </resources>
