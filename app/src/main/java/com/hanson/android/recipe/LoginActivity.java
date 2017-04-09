@@ -3,6 +3,7 @@ package com.hanson.android.recipe;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,14 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("userID", username);
                     editor.commit();
+                    // short delay before departing to main page (1.5s)
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1500);
                 } else {
                     Toast.makeText(v.getContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
                 }
