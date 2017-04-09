@@ -39,7 +39,7 @@ public class RecipeListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();  // Always call the superclass method first
-
+        recipes.clear();
         //Connect with screen elements
         txtTitle = (TextView)findViewById(R.id.txt_recipeListTitle);
         listView = (ListView)findViewById(R.id.listview_recipelist);
