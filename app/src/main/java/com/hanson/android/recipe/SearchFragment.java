@@ -97,6 +97,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         listItems.add(editText.getText().toString());
                         adapter.notifyDataSetChanged();
                         clickCounter++;
+                        editText.setText("");
                     }
                 } else {
                     Toast toast = Toast.makeText(getContext(), "Please insert the text", Toast.LENGTH_SHORT);
