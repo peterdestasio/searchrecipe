@@ -10,6 +10,11 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
+/**
+ * Pierluigi De Stasio
+ * SearchResult Activity
+ */
+
 public class SearchResult extends AppCompatActivity {
     ArrayList<String> listItems = new ArrayList<>();
     GridView gridView;
@@ -57,7 +62,14 @@ public class SearchResult extends AppCompatActivity {
     public ArrayList<String> createString(ArrayList<Integer> array){
         ArrayList<String> stringToShow = new ArrayList<>();
         for(int i=0;i<array.size();i++){
-            stringToShow.add("Matches\n" + array.get(i) + "\ningredients");
+
+            if (array.get(i)==1){
+                stringToShow.add("Matched\n" + array.get(i) + "\ningredient");
+            }
+            else{
+                stringToShow.add("Matched\n" + array.get(i) + "\ningredients");
+            }
+
         }
         return  stringToShow;
     }
