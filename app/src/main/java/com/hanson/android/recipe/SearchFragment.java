@@ -23,6 +23,7 @@ import com.hanson.android.recipe.Model.SearchResultItem;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -137,6 +138,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     ArrayList<Integer> idRecipes = new ArrayList<>();
                     ArrayList<Integer> matches = new ArrayList<>();
 
+
                     //filling the array of idRecipes
                     for(int i=0;i<resultList.size();i++){
                         idRecipes.add(resultList.get(i).get_recipeId());
@@ -146,6 +148,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     for (int j=0;j<resultList.size();j++){
                         matches.add(resultList.get(j).get_ingrCount());
                     }
+                    ArrayList<Integer> matchesNoDuplicates = removeDuplicates(matches);
                     /*
                     ArrayList<Integer> positionsfound = findPosition(matches, findMax(matches));
                     ArrayList<Integer> idRecipesSelected = new ArrayList<>();
@@ -162,10 +165,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent);
 
                         */
-
+                    //sent to Search Result intent idRecipes, matches and also the number of matches without duplicates
                     Intent intent = new Intent(getActivity(), SearchResult.class);
                     intent.putExtra("idrecipes",idRecipes);
+
+                    intent.putExtra("matchesNoDuplicates", matchesNoDuplicates);
                     intent.putExtra("matches",matches);
+
                     startActivity(intent);
 
 
@@ -236,7 +242,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         return  bestRecipes;
     }
 
-
+    /*
+    function that removes the duplicates in an array of Integer
+     */
+    public ArrayList<Integer> removeDuplicates(ArrayList<Integer> array){
+        ArrayList<Integer> noduplicates = new ArrayList<>();
+        Set<Integer> withoutDuplicates = new LinkedHashSet<Integer>(array);
+        noduplicates.clear();
+        noduplicates.addAll(withoutDuplicates);
+        return noduplicates;
+    }
 
 
 
