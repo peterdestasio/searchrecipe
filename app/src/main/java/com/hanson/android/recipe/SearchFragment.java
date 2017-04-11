@@ -65,7 +65,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         buttonSearch = (Button) view.findViewById(R.id.buttonSearch);
         gridView = (GridView) view.findViewById(R.id.gridSearch);
 
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listItems);
+        //adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listItems);
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.edit_text_custom_for_ingredients, listItems);
         gridView.setAdapter(adapter);
 
         //added a click listener on the item of the gridview
