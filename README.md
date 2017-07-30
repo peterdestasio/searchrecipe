@@ -1,4 +1,4 @@
-# Recipe Idea - Travel thew world through the food!
+# Recipe Ideas - Travel thew world through the food!
 An Android Application that gives you some recipes recommendations based on the ingredients that you have in the fridge.
 
 Cambrian @ Hanson College Project (fork of the project: https://github.com/shyjoo/Recipe)
