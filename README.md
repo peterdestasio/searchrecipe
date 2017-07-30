@@ -43,3 +43,6 @@ git clone https://github.com/peterdestasio/searchrecipe
 
 
 See also the list of [contributors](https://github.com/peterdestasio/searchrecipe/graphs/contributors) who participated in this project.
+
+## License
+[GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt)
