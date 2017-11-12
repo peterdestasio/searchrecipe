@@ -4,7 +4,10 @@ An Android Application that gives you some recipes recommendations based on the 
 Cambrian @ Hanson College Project (fork of the project: https://github.com/shyjoo/Recipe)
 
 <p align="center">
-<img src="https://github.com/peterdestasio/searchrecipe/blob/master/app/src/main/res/drawable/logo.png" width="300" align="center">
+<img src="https://github.com/peterdestasio/searchrecipe/blob/master/app/src/main/res/drawable/logo.png" width="200" align="center">
+</p>
+<p align="center">
+<img src="https://github.com/peterdestasio/searchrecipe/blob/master/presentationrecipe.gif">
 </p>
 
 ## Getting Started
